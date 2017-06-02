@@ -1,0 +1,20 @@
+{
+  "env": {
+    "development": {
+      "ignore": [
+        "**/*.test.js"
+      ]
+    }
+  },
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "stage-0"
+  ]
+}

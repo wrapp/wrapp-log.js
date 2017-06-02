@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:jest/recommended"
+  ],
+  "rules": {
+    "semi": [2, "never"],
+    "import/prefer-default-export": 0,
+    "import/newline-after-import": ["error", {"count": 2}],
+    "arrow-body-style": 0,
+    "max-len": ["error", 120, 2, {"ignoreUrls": true, "ignoreComments": false}]
+  },
+  "plugins": [
+    "jest"
+  ]
+}
