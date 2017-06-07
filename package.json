@@ -1,7 +1,21 @@
 {
-  "name": "wrapplog.js",
+  "name": "wrapp-log",
   "version": "0.1.0",
-  "description": "A logging library for Wrapp that outputs logs in accordance with WEP-007",
+  "description": "A NodeJS logging library for Wrapp that outputs logs in accordance with Wrapp Engineering Proposal 007",
+  "keywords": ["wrapp", "wep", "log", "json", "logging", "error", "stack-trace"],
+  "homepage": "https://github.com/wrapp/wrapp-log.js",
+  "repository": "https://github.com/wrapp/wrapp-log.js",
+  "author": {
+    "name" : "Marcus Bergman",
+    "email" : "marcus.bergman@wrapp.com",
+    "url" : "https://github.com/mraxus"
+  },
+  "license": "MIT",
+  "bugs": {
+    "email": "operations@wrapp.com",
+    "url": "https://github.com/wrapp/wrapp-log.js/issues"
+  },
+  "engines" : { "node" : ">=7" },
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint .",
@@ -16,9 +30,6 @@
       "jest --bail --findRelatedTests"
     ]
   },
-  "repository": "https://github.com/wrapp/wrapplog.js",
-  "author": "mraxus <marcus@wrapp.com>",
-  "license": "UNLICENSED",
   "dependencies": {
     "stack-trace": "^0.0.10"
   },
