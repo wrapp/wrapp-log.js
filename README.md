@@ -35,7 +35,7 @@ yarn add wrapp-log
  
  The `options` argument is required to be undefined or an object. Each value should be a primitive / JSON parsable object.
   
- and error is passed in options as: `{ error: new Error() }` and will be parsed. See "Output details" below for more info.
+ and error is passed in options as: `{ error: new Error() }` and will be serialized. See "Output details" below for more info.
 
 #### Input
 
@@ -72,7 +72,7 @@ Each log message is on one and the same line and a line break `\n` is added afte
 The log output will look like the example below, but on one line only.
 Any additional properties will be added.
 
-Errors are parsed to some extent (message, name and any attacked properties), and the error stack trace uses npm module [stack-trace](https://www.npmjs.com/package/stack-trace)
+Errors are serialized to some extent (message, name and any attacked properties), and the error stack trace uses npm module [stack-trace](https://www.npmjs.com/package/stack-trace)
 
 ```
 {
