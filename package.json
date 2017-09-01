@@ -41,6 +41,7 @@
     ]
   },
   "dependencies": {
+    "circular-json": "^0.3.3",
     "stack-trace": "^0.0.10"
   },
   "devDependencies": {
