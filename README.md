@@ -25,17 +25,18 @@ yarn add wrapp-log
 
 #### API
 
- * `log.debug(msg, [options])` - Outputs the message with with level: `debug`
- * `log.info(msg, [options])` - Outputs the message with with level: `info`
- * `log.warning(msg, [options])` - Outputs the message with with level: `warning`
- * `log.error(msg, [options])` - Outputs the message with with level: `error`
- * `log.panic(msg, [options])` - Outputs the message with with level: `panic` then exits the process with status code `1`
+ * `log.debug(msg, [fields])` - Outputs the message with with level: `debug`
+ * `log.info(msg, [fields])` - Outputs the message with with level: `info`
+ * `log.warning(msg, [fields])` - Outputs the message with with level: `warning`
+ * `log.error(msg, [fields])` - Outputs the message with with level: `error`
+ * `log.panic(msg, [fields])` - Outputs the message with with level: `panic` then exits the process with status code `1`
+ * `log.withFields(fields)` - Generate a new logger object that will always include the fields data in each log output.
  
  The `msg` argument is expected to be string but can be something else as well.
  
- The `options` argument is required to be undefined or an object. Each value should be a primitive / JSON parsable object.
+ The `fields` argument is required to be undefined or an object. Each value should be a primitive / JSON parsable object.
   
- and error is passed in options as: `{ error: new Error() }` and will be serialized. See "Output details" below for more info.
+ and error is passed in fields as: `{ error: new Error() }` and will be serialized. See "Output details" below for more info.
 
 
 #### Input
@@ -52,6 +53,10 @@ try {
 }
 
 log.panic('Too much to handle')
+
+const reqLog = log.withFields({ request_id: 'abc123' })
+
+reqLog.info('New message')
 ```
 
 
@@ -61,6 +66,7 @@ log.panic('Too much to handle')
 {"level":"info","timestamp":"2017-06-07T14:02:40.759Z","msg":"Informal message"}
 {"level":"error","timestamp":"2017-06-07T14:02:40.760Z","msg":"Something seriously wrong","error":{"name":"Error","message":"Cannot handle the overload...","stack":[{"fileName":"/Users/wrapp/test-logging.js","lineNumber":6,"functionName":null,"typeName":"Object","methodName":null,"columnNumber":9,"native":false},{"fileName":"module.js","lineNumber":571,"functionName":"Module._compile","typeName":"Module","methodName":"_compile","columnNumber":32,"native":false},{"fileName":"module.js","lineNumber":580,"functionName":"Module._extensions..js","typeName":"Object","methodName":".js","columnNumber":10,"native":false},{"fileName":"module.js","lineNumber":488,"functionName":"Module.load","typeName":"Module","methodName":"load","columnNumber":32,"native":false},{"fileName":"module.js","lineNumber":447,"functionName":"tryModuleLoad","typeName":null,"methodName":null,"columnNumber":12,"native":false},{"fileName":"module.js","lineNumber":439,"functionName":"Module._load","typeName":"Function","methodName":"_load","columnNumber":3,"native":false},{"fileName":"module.js","lineNumber":605,"functionName":"Module.runMain","typeName":"Module","methodName":"runMain","columnNumber":10,"native":false},{"fileName":"bootstrap_node.js","lineNumber":427,"functionName":"run","typeName":null,"methodName":null,"columnNumber":7,"native":false},{"fileName":"bootstrap_node.js","lineNumber":151,"functionName":"startup","typeName":null,"methodName":null,"columnNumber":9,"native":false},{"fileName":"bootstrap_node.js","lineNumber":542,"functionName":null,"typeName":null,"methodName":null,"columnNumber":3,"native":false}]}}
 {"level":"panic","timestamp":"2017-06-07T14:02:40.762Z","msg":"Too much to handle"}
+{"level":"info","timestamp":"2017-09-01T15:24:37.834Z","msg":"New message","request_id":"abc123"}
 ```
 
 [Exited with code 1]

@@ -12,7 +12,7 @@ process.env.SERVICE_NAME = SERVICE_NAME
   /* eslint-env jest/globals */
 
 describe('log output', () => {
-  const result = log.info('some output')
+  const result = log('info', 'some output')
 
   test('should start with "{"', () => { expect(result[0]).toBe('{') })
   test('should end with "}"', () => { expect(result.substr(result.length - 1)).toBe('}') })
@@ -21,7 +21,7 @@ describe('log output', () => {
 
 describe('log output should always contain property:', () => {
   const msg = 'more output'
-  const result = JSON.parse(log.info(msg))
+  const result = JSON.parse(log('info', msg))
 
   test('"level"', () => { expect(result).toHaveProperty('level', 'info') })
   test('"msg"', () => { expect(result).toHaveProperty('msg', msg) })
@@ -31,13 +31,13 @@ describe('log output should always contain property:', () => {
 
 describe('log output should never contain illegal property:', () => {
   const msg = 'more output'
-  const result = JSON.parse(log.info(msg, { hostname: 'should not logged' }))
+  const result = JSON.parse(log('info', msg, { hostname: 'should not logged' }))
 
   test('"hostname"', () => { expect(result.hostname).toBeUndefined() })
 })
 
 describe('log output should output mandatory data', () => {
-  const result = log.info('msg')
+  const result = log('info', 'msg')
 
   test('"in order"', () => {
     expect(result).toMatch(/{"service":".*","level":"info","timestamp":".*","msg":"msg"}/)
@@ -45,15 +45,15 @@ describe('log output should output mandatory data', () => {
 })
 
 describe('log output with additional attributes should output data', () => {
-  const result = log.info('msg', { data: { sub: 1, x: 'x' } })
+  const result = log('info', 'msg', { data: { sub: 1, x: 'x' } })
 
   test('"with mandatory data order first and then additional attributes"', () => {
     expect(result).toMatch(/{"service":".*","level":"info","timestamp":".*","msg":"msg","data":{"sub":1,"x":"x"}}/)
   })
 })
 
-describe('all mandatory data can be overwritten in options object but stay in order:', () => {
-  const result = log.info('x', { msg: 'msg', level: 'level', service: 'service', timestamp: 'timestamp' })
+describe('all mandatory data can be overwritten in fields object but stay in order:', () => {
+  const result = log('info', 'x', { msg: 'msg', level: 'level', service: 'service', timestamp: 'timestamp' })
 
   test('"with mandatory data order first and then additional attributes"', () => {
     expect(result).toMatch(/{"service":"service","level":"level","timestamp":"timestamp","msg":"msg"}/)
@@ -62,19 +62,19 @@ describe('all mandatory data can be overwritten in options object but stay in or
 
 describe('testing all different log levels', () => {
   /* eslint-disable no-multi-spaces,space-in-parens */
-  test('debug',   () => expect(JSON.parse(log.debug(''  ))).toHaveProperty('level', 'debug'))
-  test('info',    () => expect(JSON.parse(log.info(''   ))).toHaveProperty('level', 'info'))
-  test('warning', () => expect(JSON.parse(log.warning(''))).toHaveProperty('level', 'warning'))
-  test('error',   () => expect(JSON.parse(log.error(''  ))).toHaveProperty('level', 'error'))
-  test('panic',   () => expect(JSON.parse(log.panic(''  ))).toHaveProperty('level', 'panic'))
+  test('debug',   () => expect(JSON.parse(log('debug', ''  ))).toHaveProperty('level', 'debug'))
+  test('info',    () => expect(JSON.parse(log('info', ''   ))).toHaveProperty('level', 'info'))
+  test('warning', () => expect(JSON.parse(log('warning', ''))).toHaveProperty('level', 'warning'))
+  test('error',   () => expect(JSON.parse(log('error', ''  ))).toHaveProperty('level', 'error'))
+  test('panic',   () => expect(JSON.parse(log('panic', ''  ))).toHaveProperty('level', 'panic'))
   /* eslint-enable */
 })
 
-describe('logging with additional options', () => {
+describe('logging with additional fields', () => {
   const shallowString = 'some small str'
   const deepObject = { live: true, name: 'x', states: ['a', 'b'] }
-  const options = { deepObject, shallowString }
-  const logObj = JSON.parse(log.info('hej', options))
+  const fields = { deepObject, shallowString }
+  const logObj = JSON.parse(log('info', 'hej', fields))
   const expects = ['deepObject', 'level', 'msg', 'service', 'shallowString', 'timestamp']
 
   test('should only contain expected details:', () => {
@@ -89,7 +89,7 @@ describe('logging with additional options', () => {
 })
 
 describe('logging with error', () => {
-  const logObj = JSON.parse(log.error('fel', { error: new Error('error') }))
+  const logObj = JSON.parse(log('error', 'fel', { error: new Error('error') }))
   const error = logObj.error
 
   describe('should have the expected log fields:', () => {
@@ -130,7 +130,7 @@ describe('logging with custom error', () => {
   }
   MyError.prototype = new Error() // <-- remove this if you do not
                                   //     want MyError to be instanceof Error
-  const logObj = JSON.parse(log.error('mitt fel', { error: new MyError('kass') }))
+  const logObj = JSON.parse(log('error', 'mitt fel', { error: new MyError('kass') }))
   const error = logObj.error
 
   test('should only contain expected error details:', () => {
@@ -147,7 +147,7 @@ describe('logging an object with a circular reference', () => {
   }
   circular.self = circular
 
-  const logObj = JSON.parse(log.error('mitt fel', { circular }))
+  const logObj = JSON.parse(log('error', 'mitt fel', { circular }))
   const circularDataObj = logObj.circular
   const circularRef = circularDataObj.self
 
