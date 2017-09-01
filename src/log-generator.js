@@ -5,12 +5,12 @@ const circularJSON = require('circular-json')
 const illegalProperties = ['hostname']
 
 function log(level, msg, options = {}) {
-  const result = Object.assign({}, options, {
-    level,
-    msg,
+  const result = Object.assign({}, {
     service: process.env.SERVICE_NAME,
+    level,
     timestamp: new Date(),
-  })
+    msg,
+  }, options)
 
   // Delete all illegal properties
   illegalProperties.forEach((key) => { delete result[key] })
