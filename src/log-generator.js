@@ -1,4 +1,5 @@
 const serialize = require('./json-serializables').serialize
+const circularJSON = require('circular-json')
 
 
 const illegalProperties = ['hostname']
@@ -19,7 +20,7 @@ function log(level, msg, options = {}) {
     result[key] = serialize(result[key])
   })
 
-  return `${JSON.stringify(result)}\n`
+  return `${circularJSON.stringify(result)}\n`
 }
 
 /* eslint-disable key-spacing,space-in-parens,no-multi-spaces */

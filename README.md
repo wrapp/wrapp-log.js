@@ -37,6 +37,7 @@ yarn add wrapp-log
   
  and error is passed in options as: `{ error: new Error() }` and will be serialized. See "Output details" below for more info.
 
+
 #### Input
 
 ```js
@@ -64,6 +65,7 @@ log.panic('Too much to handle')
 
 [Exited with code 1]
 
+
 ### Output details
 
 All output is performed to standard out. Nothing goes to standard error.
@@ -84,3 +86,12 @@ Errors are serialized to some extent (message, name and any attacked properties)
 }
 ```
 
+
+#### Circular references
+
+The JSON serialisation are performed by [circular-json](https://www.npmjs.com/package/circular-json). This makes data attributes with circular references possible to be logged. 
+
+
+### Development
+
+Tests are run with jest: `jest` or `yarn test`/`npm run test` (added coverage measurements)
