@@ -1,6 +1,6 @@
 const MockDate = require('mockdate')
 
-const log = require('./log-generator')
+const log = require('./logGenerator')
 
 
 const MOCK_DATETIME = '2017-06-01T12:20:35.850Z'

@@ -1,4 +1,4 @@
-const log = require('./log-generator')
+const log = require('./logGenerator')
 const getLoggerWithBaseFields = require('./getLoggerWithFields')
 
 

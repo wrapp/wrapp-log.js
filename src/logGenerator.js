@@ -1,4 +1,4 @@
-const serialize = require('./json-serializables').serialize
+const serialize = require('./jsonSerializables').serialize
 const circularJSON = require('circular-json')
 
 
