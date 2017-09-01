@@ -52,6 +52,14 @@ describe('log output with additional attributes should output data', () => {
   })
 })
 
+describe('all mandatory data can be overwritten in options object but stay in order:', () => {
+  const result = log.info('x', { msg: 'msg', level: 'level', service: 'service', timestamp: 'timestamp' })
+
+  test('"with mandatory data order first and then additional attributes"', () => {
+    expect(result).toMatch(/{"service":"service","level":"level","timestamp":"timestamp","msg":"msg"}/)
+  })
+})
+
 describe('testing all different log levels', () => {
   /* eslint-disable no-multi-spaces,space-in-parens */
   test('debug',   () => expect(JSON.parse(log.debug(''  ))).toHaveProperty('level', 'debug'))
