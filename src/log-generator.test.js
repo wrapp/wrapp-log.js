@@ -15,7 +15,7 @@ describe('log output', () => {
   const result = log.info('some output')
 
   test('should start with "{"', () => { expect(result[0]).toBe('{') })
-  test('should end with "}\\n"', () => { expect(result.substr(result.length - 2)).toBe('}\n') })
+  test('should end with "}"', () => { expect(result.substr(result.length - 1)).toBe('}') })
   test('should be parsable JSON', () => { expect(JSON.parse(result)).toBeTruthy() })
 })
 
