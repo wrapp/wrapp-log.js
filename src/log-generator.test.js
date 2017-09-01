@@ -36,6 +36,22 @@ describe('log output should never contain illegal property:', () => {
   test('"hostname"', () => { expect(result.hostname).toBeUndefined() })
 })
 
+describe('log output should output mandatory data', () => {
+  const result = log.info('msg')
+
+  test('"in order"', () => {
+    expect(result).toMatch(/{"service":".*","level":"info","timestamp":".*","msg":"msg"}/)
+  })
+})
+
+describe('log output with additional attributes should output data', () => {
+  const result = log.info('msg', { data: { sub: 1, x: 'x' } })
+
+  test('"with mandatory data order first and then additional attributes"', () => {
+    expect(result).toMatch(/{"service":".*","level":"info","timestamp":".*","msg":"msg","data":{"sub":1,"x":"x"}}/)
+  })
+})
+
 describe('testing all different log levels', () => {
   /* eslint-disable no-multi-spaces,space-in-parens */
   test('debug',   () => expect(JSON.parse(log.debug(''  ))).toHaveProperty('level', 'debug'))
