@@ -8,7 +8,8 @@
     "import/prefer-default-export": 0,
     "import/newline-after-import": ["error", {"count": 2}],
     "arrow-body-style": 0,
-    "max-len": ["error", 120, 2, {"ignoreUrls": true, "ignoreComments": false}]
+    "max-len": ["error", 120, 2, {"ignoreUrls": true, "ignoreComments": false}],
+    "prefer-template": 0
   },
   "plugins": [
     "jest"
