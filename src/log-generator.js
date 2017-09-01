@@ -23,7 +23,7 @@ function log(level, msg, options = {}) {
   return `${circularJSON.stringify(result)}`
 }
 
-/* eslint-disable key-spacing,space-in-parens,no-multi-spaces */
+/* eslint-disable key-spacing,space-in-parens,no-multi-spaces,prefer-template */
 module.exports = {
   debug:   (msg, options) => log('debug',   msg, options),
   info:    (msg, options) => log('info',    msg, options),
