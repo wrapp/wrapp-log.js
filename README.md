@@ -84,3 +84,7 @@ Errors are serialized to some extent (message, name and any attacked properties)
 }
 ```
 
+
+### Development
+
+Tests are run with jest: `jest` or `yarn test`/`npm run test` (added coverage measurements)
