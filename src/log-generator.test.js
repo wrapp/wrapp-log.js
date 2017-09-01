@@ -116,3 +116,20 @@ describe('logging with custom error', () => {
     test('extra', () => expect(error).toHaveProperty('extra', 42))
   })
 })
+
+describe('logging an object with a circular reference', () => {
+  const circular = {
+    someText: 'is like this',
+  }
+  circular.self = circular
+
+  const logObj = JSON.parse(log.error('mitt fel', { circular }))
+  const circularDataObj = logObj.circular
+  const circularRef = circularDataObj.self
+
+  test('should only contain expected log data:', () => {
+    expect(Object.keys(logObj).sort()).toEqual(['circular', 'level', 'msg', 'service', 'timestamp'])
+    expect(Object.keys(circularDataObj).sort()).toEqual(['self', 'someText'])
+    expect(circularRef).toBe('~circular')
+  })
+})
