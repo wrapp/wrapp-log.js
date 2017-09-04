@@ -52,21 +52,41 @@ try {
   log.error('Something seriously wrong', { error: e })
 }
 
-log.panic('Too much to handle')
-
+console.log('') // Line break
 const reqLog = log.withFields({ request_id: 'abc123' })
 
 reqLog.info('New message')
+reqLog.info('Merge fields', { extra: 'is ok' })
+reqLog.warning('Overwriting previous set fields', { request_id: 'is allowed and possible' })
+
+console.log('') // Line break
+
+const specLog = reqLog.withFields({ specs: 1337 })
+
+specLog.info('Inception!', { wo: 'ot' })
+specLog.info('It\'s possible to override preset fields', { request_id: '321cba' })
+specLog.warning('It\'s possible for any field...', { level: 'messed up' })
+
+console.log('') // Killing the process by panic
+log.panic('Too much to handle')
 ```
 
 
 #### Output
 
 ```
-{"level":"info","timestamp":"2017-06-07T14:02:40.759Z","msg":"Informal message"}
-{"level":"error","timestamp":"2017-06-07T14:02:40.760Z","msg":"Something seriously wrong","error":{"name":"Error","message":"Cannot handle the overload...","stack":[{"fileName":"/Users/wrapp/test-logging.js","lineNumber":6,"functionName":null,"typeName":"Object","methodName":null,"columnNumber":9,"native":false},{"fileName":"module.js","lineNumber":571,"functionName":"Module._compile","typeName":"Module","methodName":"_compile","columnNumber":32,"native":false},{"fileName":"module.js","lineNumber":580,"functionName":"Module._extensions..js","typeName":"Object","methodName":".js","columnNumber":10,"native":false},{"fileName":"module.js","lineNumber":488,"functionName":"Module.load","typeName":"Module","methodName":"load","columnNumber":32,"native":false},{"fileName":"module.js","lineNumber":447,"functionName":"tryModuleLoad","typeName":null,"methodName":null,"columnNumber":12,"native":false},{"fileName":"module.js","lineNumber":439,"functionName":"Module._load","typeName":"Function","methodName":"_load","columnNumber":3,"native":false},{"fileName":"module.js","lineNumber":605,"functionName":"Module.runMain","typeName":"Module","methodName":"runMain","columnNumber":10,"native":false},{"fileName":"bootstrap_node.js","lineNumber":427,"functionName":"run","typeName":null,"methodName":null,"columnNumber":7,"native":false},{"fileName":"bootstrap_node.js","lineNumber":151,"functionName":"startup","typeName":null,"methodName":null,"columnNumber":9,"native":false},{"fileName":"bootstrap_node.js","lineNumber":542,"functionName":null,"typeName":null,"methodName":null,"columnNumber":3,"native":false}]}}
-{"level":"panic","timestamp":"2017-06-07T14:02:40.762Z","msg":"Too much to handle"}
-{"level":"info","timestamp":"2017-09-01T15:24:37.834Z","msg":"New message","request_id":"abc123"}
+{"level":"info","timestamp":"2017-01-09T01:10:01.799Z","msg":"Informal message"}
+{"level":"error","timestamp":"2017-01-09T01:10:01.799Z","msg":"Something seriously wrong","error":{"name":"Error","message":"Cannot handle the overload...","stack":[{"fileName":"/Users/wrapp/test-logging.js","lineNumber":6,"functionName":null,"typeName":"Object","methodName":null,"columnNumber":9,"native":false},{"fileName":"module.js","lineNumber":571,"functionName":"Module._compile","typeName":"Module","methodName":"_compile","columnNumber":32,"native":false},{"fileName":"module.js","lineNumber":580,"functionName":"Module._extensions..js","typeName":"Object","methodName":".js","columnNumber":10,"native":false},{"fileName":"module.js","lineNumber":488,"functionName":"Module.load","typeName":"Module","methodName":"load","columnNumber":32,"native":false},{"fileName":"module.js","lineNumber":447,"functionName":"tryModuleLoad","typeName":null,"methodName":null,"columnNumber":12,"native":false},{"fileName":"module.js","lineNumber":439,"functionName":"Module._load","typeName":"Function","methodName":"_load","columnNumber":3,"native":false},{"fileName":"module.js","lineNumber":605,"functionName":"Module.runMain","typeName":"Module","methodName":"runMain","columnNumber":10,"native":false},{"fileName":"bootstrap_node.js","lineNumber":427,"functionName":"run","typeName":null,"methodName":null,"columnNumber":7,"native":false},{"fileName":"bootstrap_node.js","lineNumber":151,"functionName":"startup","typeName":null,"methodName":null,"columnNumber":9,"native":false},{"fileName":"bootstrap_node.js","lineNumber":542,"functionName":null,"typeName":null,"methodName":null,"columnNumber":3,"native":false}]}}
+
+{"level":"info","timestamp":"2017-01-09T01:10:01.799Z","msg":"New message","request_id":"abc123"}
+{"level":"info","timestamp":"2017-01-09T01:10:01.799Z","msg":"Merge fields","request_id":"abc123","extra":"is ok"}
+{"level":"warning","timestamp":"2017-01-09T01:10:01.799Z","msg":"Overwriting previous set fields","request_id":"is allowed and possible"}
+
+{"level":"info","timestamp":"2017-01-09T01:10:01.799Z","msg":"Inception!","request_id":"abc123","specs":1337,"wo":"ot"}
+{"level":"info","timestamp":"2017-01-09T01:10:01.799Z","msg":"It's possible to override preset fields","request_id":"321cba","specs":1337}
+{"level":"messed up","timestamp":"2017-01-09T01:10:01.799Z","msg":"It's possible for any field...","request_id":"abc123","specs":1337}
+
+{"level":"panic","timestamp":"2017-01-09T01:10:01.799Z","msg":"Wow, this is just too much!"}
 ```
 
 [Exited with code 1]
