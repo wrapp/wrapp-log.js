@@ -102,7 +102,7 @@ Any additional properties will be added.
 
 For the `service` attribute to be automatically added to each log line the environment variable `SERVICE_NAME` must be set. If not set, the attribute will not be serialized.
 
-Errors are serialized to some extent (message, name and any attacked properties), and the error stack trace uses npm module [stack-trace](https://www.npmjs.com/package/stack-trace)
+Errors are serialized to some extent (message, name and any attached properties), and the error stack trace uses npm module [stack-trace](https://www.npmjs.com/package/stack-trace)
 
 The multiline format below is to show the order of data being outputted. Each actual log message will be serialized on one and the same line.  
 
