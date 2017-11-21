@@ -1,6 +1,6 @@
 {
   "name": "wrapp-log",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A NodeJS logging library for Wrapp that outputs logs in accordance with Wrapp Engineering Proposal 007",
   "keywords": [
     "wrapp",
